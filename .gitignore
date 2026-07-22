@@ -42,3 +42,6 @@ tests/fixtures/private/
 /scripts/smoke_*.py
 /scripts/audit_*.py
 /scripts/validate_*_against_*.py
+
+# Local diagnostic comparison scripts
+/scripts/compare_*.py
