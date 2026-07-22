@@ -72,6 +72,7 @@ def test_collect_hsr_grid_builds_expected_request(
     assert manifest.identity.product == "HSR"
     assert manifest.identity.grid == "HB_500m"
     assert manifest.artifact is not None
+    assert manifest.artifact.content_type == "application/octet-stream"
     assert manifest.artifact.relative_path.startswith(
         "raw/radar_hsr/2026/07/22/"
     )

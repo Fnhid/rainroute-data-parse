@@ -38,6 +38,7 @@ class RawResponseCollector:
         params: dict[str, Any],
         destination: Path,
         file_format: FileFormat,
+        content_type_override: str | None = None,
     ) -> CollectionManifest:
         destination = destination.expanduser().resolve()
 
@@ -86,7 +87,11 @@ class RawResponseCollector:
                 format=file_format,
                 size_bytes=artifact.size_bytes,
                 sha256=artifact.sha256,
-                content_type=response.content_type,
+                content_type=(
+                    content_type_override
+                    if content_type_override is not None
+                    else response.content_type
+                ),
             ),
         )
 

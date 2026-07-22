@@ -21,6 +21,7 @@ from rainroute_data.parsers.radar_binary import (
 )
 from rainroute_data.schemas.manifest import DataIdentity
 from rainroute_data.storage.layout import raw_artifact_path
+from rainroute_data.validation.radar_hsr import validate_hsr_grid
 
 KST = ZoneInfo("Asia/Seoul")
 
@@ -100,6 +101,7 @@ def main() -> None:
     )
 
     grid = parse_radar_binary_file(artifact_path)
+    report = validate_hsr_grid(grid)
     dbz = hsr_to_dbz(grid.values)
 
     print(f"status={manifest.status}")
@@ -111,6 +113,12 @@ def main() -> None:
     print(
         "finite_dbz_count="
         f"{int(np.isfinite(dbz).sum())}"
+    )
+    print(f"no_echo_count={report.no_echo_cells}")
+    print(f"outside_count={report.outside_cells}")
+    print(
+        "valid_echo_fraction="
+        f"{report.valid_echo_fraction:.6f}"
     )
     print(
         "file_size_bytes="

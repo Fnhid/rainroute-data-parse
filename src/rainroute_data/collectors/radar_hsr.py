@@ -63,4 +63,5 @@ def collect_hsr_grid(
         },
         destination=destination,
         file_format=FileFormat.BINARY,
+        content_type_override="application/octet-stream",
     )

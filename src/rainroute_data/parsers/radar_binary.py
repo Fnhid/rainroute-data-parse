@@ -14,6 +14,16 @@ class RadarBinaryParseError(ValueError):
 
 ByteOrder = Literal["little", "big"]
 
+HSR_NO_ECHO = -25_000
+HSR_OUTSIDE_OBSERVATION = -30_000
+HSR_UNDOCUMENTED_MASK = -20_100
+
+HSR_SPECIAL_VALUES = (
+    HSR_NO_ECHO,
+    HSR_OUTSIDE_OBSERVATION,
+    HSR_UNDOCUMENTED_MASK,
+)
+
 
 @dataclass(frozen=True)
 class RadarGrid:
@@ -138,7 +148,7 @@ def hsr_to_dbz(
     """
     result = values.astype(np.float32) / 100.0
 
-    invalid = (values == -25_000) | (values == -30_000)
+    invalid = np.isin(values, HSR_SPECIAL_VALUES)
     result[invalid] = np.nan
 
     return result
@@ -147,16 +157,23 @@ def hsr_to_dbz(
 def valid_echo_mask(
     values: npt.NDArray[np.int16],
 ) -> npt.NDArray[np.bool_]:
-    return (values != -25_000) & (values != -30_000)
+    return ~np.isin(values, HSR_SPECIAL_VALUES)
 
 
 def no_echo_mask(
     values: npt.NDArray[np.int16],
 ) -> npt.NDArray[np.bool_]:
-    return values == -25_000
+    return values == HSR_NO_ECHO
 
 
 def outside_observation_mask(
     values: npt.NDArray[np.int16],
 ) -> npt.NDArray[np.bool_]:
-    return values == -30_000
+    return values == HSR_OUTSIDE_OBSERVATION
+
+
+def undocumented_mask(
+    values: npt.NDArray[np.int16],
+) -> npt.NDArray[np.bool_]:
+    """Return cells encoded as the observed undocumented -20100 code."""
+    return values == HSR_UNDOCUMENTED_MASK
