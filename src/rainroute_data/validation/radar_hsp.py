@@ -42,7 +42,6 @@ def validate_hsp_grid(
     *,
     expected_nx: int = 2305,
     expected_ny: int = 2881,
-    provisional_scale: float = 0.01,
     maximum_rain_rate_mm_h: float = 500.0,
 ) -> HspValidationReport:
     if grid.header.nx != expected_nx:
@@ -83,10 +82,7 @@ def validate_hsp_grid(
             f"Unexpected negative physical HSP values: {unexpected.tolist()}"
         )
 
-    rain_rate = hsp_raw_to_rain_rate(
-        values,
-        scale=provisional_scale,
-    )
+    rain_rate = hsp_raw_to_rain_rate(values)
     finite_rain_rate = rain_rate[np.isfinite(rain_rate)]
 
     if finite_rain_rate.size:

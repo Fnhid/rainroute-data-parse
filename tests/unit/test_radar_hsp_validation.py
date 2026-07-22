@@ -116,5 +116,5 @@ def test_rejects_implausible_rain_rate() -> None:
             grid,
             expected_nx=1,
             expected_ny=1,
-            provisional_scale=0.1,
+            maximum_rain_rate_mm_h=200.0,
         )
