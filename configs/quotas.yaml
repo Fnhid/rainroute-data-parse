@@ -1,0 +1,26 @@
+timezone: Asia/Seoul
+
+daily:
+  max_requests: 16000
+  max_download_bytes: 4000000000
+
+reserve:
+  realtime_requests: 2500
+  realtime_download_bytes: 800000000
+
+backfill:
+  stop_at_request_ratio: 0.90
+  stop_at_byte_ratio: 0.90
+
+rate_limit:
+  max_concurrency: 1
+  min_interval_seconds: 1.0
+  retry_delays_seconds:
+    - 30
+    - 120
+    - 600
+
+disk:
+  stop_backfill_at_used_ratio: 0.80
+  realtime_only_at_used_ratio: 0.85
+  stop_all_large_downloads_at_used_ratio: 0.90

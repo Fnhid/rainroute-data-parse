@@ -1,0 +1,42 @@
+name: rainroute-data
+
+channels:
+  - conda-forge
+
+dependencies:
+  - python=3.11
+  - pip
+
+  # HTTP / configuration / CLI
+  - httpx
+  - pydantic
+  - pydantic-settings
+  - typer
+  - rich
+  - pyyaml
+  - tenacity
+
+  # Arrays and tabular data
+  - numpy
+  - pandas
+  - xarray
+
+  # Weather and geospatial formats
+  - eccodes
+  - cfgrib
+  - netcdf4
+  - h5netcdf
+  - pyproj
+
+  # Dataset storage
+  - zarr
+  - numcodecs
+
+  # Development
+  - pytest
+  - pytest-cov
+  - ruff
+  - mypy
+
+  - pip:
+      - -e .

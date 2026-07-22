@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rainroute-data"
+version = "0.1.0"
+description = "KMA weather-data collection, parsing, validation, and normalization pipeline."
+readme = "README.md"
+requires-python = ">=3.11,<3.12"
+dependencies = [
+    "httpx",
+    "pydantic>=2",
+    "pydantic-settings",
+    "typer",
+    "rich",
+    "pyyaml",
+    "tenacity",
+]
+
+[project.scripts]
+rainroute-data = "rainroute_data.cli.main:app"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra --strict-markers"
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+packages = ["rainroute_data"]
