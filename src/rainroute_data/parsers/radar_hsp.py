@@ -120,6 +120,14 @@ class HspGrid:
         return self.values.shape
 
     @property
+    def nx(self) -> int:
+        return self.header.nx
+
+    @property
+    def ny(self) -> int:
+        return self.header.ny
+
+    @property
     def primary_data_code(self) -> int | None:
         if not self.header.data_codes:
             return None

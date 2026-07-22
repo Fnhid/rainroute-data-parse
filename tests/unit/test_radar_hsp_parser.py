@@ -86,6 +86,8 @@ def test_parse_hsp_payload() -> None:
     )
 
     assert grid.shape == (2, 3)
+    assert grid.nx == 3
+    assert grid.ny == 2
     assert grid.header.version == 1
     assert grid.header.product_type == 5
     assert grid.header.product_type_name == "HSR"
